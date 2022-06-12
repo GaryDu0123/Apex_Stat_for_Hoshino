@@ -1,7 +1,9 @@
 # APEX Legend制造器,地图轮换查询
 
-插件还未完成所有功能, 希望有兴趣的dalao提交pr, 由于API开发者未提供制造器内物品的所有名字`crafting_names.py`内的名字可能还存在不与API匹配的情况, 
-发现不一致后会随时更新
+插件还未完成所有功能, 希望有兴趣的dalao提交pr.
+
+此外由于API开发者未提供制造器内物品的所有名字`crafting_names.py`内的名字可能还存在不与API匹配的情况, 
+列表中获取不到对应键值后会显示英文, 之后发现不一致后会随时更新
 
 要获得完整功能, 需要去 [APEX LEGENDS STATUS](https://apexlegendsapi.com) 申请api
 
