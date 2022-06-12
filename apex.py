@@ -10,7 +10,7 @@ from .crafting import get_crafting_items
 from .api import API_KEY
 
 if not API_KEY:
-    sv = Service('apex', help_='''
+    sv = Service('Apex_Stat', help_='''
     apex 查询当前地图 |->查询当前为哪张地图
     apex 查询轮换地图 [1-5] |->查询未来1-5小时的地图以及轮换时间
     '''.strip())
