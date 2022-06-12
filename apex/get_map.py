@@ -2,10 +2,8 @@
 # -*-coding:utf-8 -*-
 from .tool import get_response, recalculate_timezone
 from hoshino.typing import CQEvent
-from .MapNames import map_name_dict
-
-# https://portal.apexlegendsapi.com/
-API_KEY = "dd3c36a464b7dc5fb2d5c090e0687caa"
+from .api import API_KEY
+from .map_names import map_name_dict
 
 
 # todo https://cdn.apexstats.dev/Bot/Legends/Banners/

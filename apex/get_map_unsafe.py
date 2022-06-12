@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
+"""
+Unsafe 不是指操作不安全, 而是这个api来源不太清楚, 参考了apex-stats-discord Bot
+的请求网址, 暂时不清楚这个api接口还有什么参数
+
+"""
 from .tool import get_response, get_time
 from hoshino.typing import CQEvent
-from .MapNames import map_name_dict
+from .map_names import map_name_dict
 
 maximum_query_amount = 5
 
