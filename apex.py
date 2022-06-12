@@ -11,9 +11,9 @@ from .api import API_KEY
 
 if not API_KEY:
     sv = Service('Apex_Stat', help_='''
-    apex 查询当前地图 |->查询当前为哪张地图
-    apex 查询轮换地图 [1-5] |->查询未来1-5小时的地图以及轮换时间
-    '''.strip())
+apex 查询当前地图 |->查询当前为哪张地图
+apex 查询轮换地图 [1-5] |->查询未来1-5小时的地图以及轮换时间
+'''.strip())
 
     trigger_keyword: Dict[str, Callable] = {
         "查询当前地图": get_map_unsafe,
@@ -21,11 +21,11 @@ if not API_KEY:
     }
 else:
     sv = Service('apex', help_='''
-        apex 查询当前地图 |->查询当前为哪张地图
-        apex 查询下张地图 |->查询下张地图
-        apex 查询轮换地图 [1-5(小时)] |->查询未来1-5小时的地图以及轮换时间
-        apex 查询制造器 |->查询今日复制器可制造物品
-        '''.strip())
+apex 查询当前地图 |->查询当前为哪张地图
+apex 查询下张地图 |->查询下张地图
+apex 查询轮换地图 [1-5(小时)] |->查询未来1-5小时的地图以及轮换时间
+apex 查询制造器 |->查询今日复制器可制造物品
+'''.strip())
 
     trigger_keyword: Dict[str, Callable] = {
         "查询当前地图": get_map,
