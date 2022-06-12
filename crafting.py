@@ -21,7 +21,9 @@ async def get_crafting_items(bot, ev: CQEvent, args):
         if bundle["bundle"] in ignore_bundle:
             continue
         for items in bundle["bundleContent"]:
-            item_name_ch = crafting_dict[items['itemType']['name']]
+            item_name_ch = items['itemType']['name']
+            if items['itemType']['name'] in crafting_dict:
+                item_name_ch = crafting_dict[items['itemType']['name']]
             rarity_ch = rarity_dict[items['itemType']['rarity']]
             if bundle['bundleType'] == "daily":
                 daily_bundle.append([item_name_ch, rarity_ch, items['cost']])
