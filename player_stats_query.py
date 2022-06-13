@@ -26,13 +26,13 @@ async def get_player_stats(bot, ev: CQEvent, args):
     if len(args) != 2:
         await bot.send(ev, "请输入正确数量的参数 [名字 平台(PC/PS4/X1)]")
         return
-    if args[1] not in ["PC", "PS4", "X1"]:
+    if args[1].upper() not in ["PC", "PS4", "X1"]:
         await bot.send(ev, "未知平台(PC/PS4/X1)")
         return
     params = {
         "auth": API_KEY,
         "player": args[0],
-        "platform": args[1]
+        "platform": args[1].upper()
     }
     content = await get_response(f"https://api.mozambiquehe.re/bridge", True, params)
     if "Error" in content:
@@ -44,7 +44,7 @@ async def get_player_stats(bot, ev: CQEvent, args):
 状态: [{content["realtime"]["currentStateAsText"]}]
 等级: {global_data["level"]} ({global_data["toNextLevelPercent"]}%)
 ====排位====
-大逃杀: {rank.get(global_data["rank"]["rankName"], "未知")} {global_data["rank"]["rankDiv"]}, {global_data["rank"]["rankScore"]} RP
-竞技场: {rank.get(global_data["arena"]["rankName"], "未知")} {global_data["arena"]["rankDiv"]}, {global_data["arena"]["rankScore"]} AP
+大逃杀: {rank.get(global_data["rank"]["rankName"], "未知")}{global_data["rank"]["rankDiv"]} | {global_data["rank"]["rankScore"]} RP
+竞技场: {rank.get(global_data["arena"]["rankName"], "未知")}{global_data["arena"]["rankDiv"]} | {global_data["arena"]["rankScore"]} AP
 """.strip()
     await bot.send(ev, reply)
