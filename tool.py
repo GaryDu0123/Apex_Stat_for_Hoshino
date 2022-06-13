@@ -5,8 +5,8 @@ import aiohttp
 from datetime import datetime, timedelta
 
 
-async def get_response(url, force_convert=False):
-    async with aiohttp.request("GET", url) as rep:
+async def get_response(url, force_convert=False, params=None):
+    async with aiohttp.request("GET", url, params=params) as rep:
         if not force_convert:
             return await rep.json()
         return json.loads(await rep.read())
