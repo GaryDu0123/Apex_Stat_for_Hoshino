@@ -28,7 +28,7 @@ apex 查询下张地图 # 查询下张地图
 apex 查询轮换地图 [1-5] # 查询未来1-5小时的地图以及轮换时间
 apex 查询制造器 # 查询今日复制器可制造物品
 apex 查询猎杀分数线 # 查询成为猎杀的最低分数
-apex 查询用户数据 用户名 平台(PC/PS4/X1) # 查询用户数据
+apex 查询用户数据 origin用户名 平台(PC/PS4/X1) # 查询用户数据
 '''.strip())
 
     trigger_keyword: Dict[str, Callable] = {
