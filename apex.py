@@ -22,7 +22,7 @@ apex 查询轮换地图 [1-5] # 查询未来1-5小时的地图以及轮换时间
         "查询轮换地图": get_future_map_unsafe,
     }
 else:
-    sv = Service('apex', help_='''
+    sv = Service('apex_stats', help_='''
 apex 查询当前地图 # 查询当前为哪张地图
 apex 查询下张地图 # 查询下张地图
 apex 查询轮换地图 [1-5] # 查询未来1-5小时的地图以及轮换时间

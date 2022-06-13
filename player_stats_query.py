@@ -11,6 +11,7 @@ from .api import API_KEY
 
 rank = {
     "Unranked": "未排名",
+    "Rookie": "菜鸟",
     "Bronze": "青铜",
     "Silver": "白银",
     "Gold": "黄金",
@@ -38,12 +39,10 @@ async def get_player_stats(bot, ev: CQEvent, args):
         await bot.send(ev, "请求失败, 未找到用户~")
         return
     global_data = content["global"]
-    total_data = content["total"]
     reply = f"""
 {global_data["name"]} 的数据 
 状态: [{content["realtime"]["currentStateAsText"]}]
 等级: {global_data["level"]} ({global_data["toNextLevelPercent"]}%)
-大逃杀击杀数: {total_data["kills"]["value"]}
 ====排位====
 大逃杀: {rank.get(global_data["rank"]["rankName"], "未知")} {global_data["rank"]["rankDiv"]}, {global_data["rank"]["rankScore"]} RP
 竞技场: {rank.get(global_data["arena"]["rankName"], "未知")} {global_data["arena"]["rankDiv"]}, {global_data["arena"]["rankScore"]} AP
