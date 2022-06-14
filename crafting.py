@@ -52,12 +52,14 @@ def _image_display_content_converter(content):
                 "name": "重型能量弹匣",
                 "cost": 30,
                 "name_en": "extended_energy_mag",
-                "download_link": ""
+                "download_link": "",
+                "rarity": "Common"
             }, {
                 "name": "动能装填器",
                 "cost": 30,
                 "name_en": "extended_energy_mag",
-                "download_link": ""
+                "download_link": "",
+                "rarity": "Common"
             }
         ],
         "每周轮换": [
@@ -65,12 +67,14 @@ def _image_display_content_converter(content):
                 "name": "重型能量弹匣",
                 "cost": 30,
                 "name_en": "extended_energy_mag",
-                "download_link": ""
+                "download_link": "",
+                "rarity": "Common"
             }, {
                 "name": "动能装填器",
                 "cost": 30,
                 "name_en": "extended_energy_mag",
-                "download_link": ""
+                "download_link": "",
+                "rarity": "Common"
             }
         ],
         "常驻": [
@@ -78,12 +82,14 @@ def _image_display_content_converter(content):
                 "name": "重型能量弹匣",
                 "name_en": "extended_energy_mag",
                 "download_link": "",
-                "cost": 30
+                "cost": 30,
+                "rarity": "Common"
             }, {
                 "name": "动能装填器",
                 "name_en": "extended_energy_mag",
                 "download_link": "",
-                "cost": 30
+                "cost": 30,
+                "rarity": "Common"
             }
         ]
     }
@@ -96,12 +102,14 @@ def _image_display_content_converter(content):
             process_dict["content"]["常驻"].append({
                 "name": "子弹",
                 "name_en": "ammo",
+                "rarity": "Common",
                 "download_link": "https://legion.apexlegendsstatus.com/cache/0f8ac57cbf0db1163f77fcef09f9fb2c.png",
                 "cost": 10
             })
             continue
         for items in bundle["bundleContent"]:
             item_name_ch = items['itemType']['name']
+            rarity = items['itemType']['rarity']
             if items['itemType']['name'] in crafting_dict:
                 item_name_ch = crafting_dict[items['itemType']['name']]
             asset_link = items['itemType']["asset"]
@@ -110,23 +118,26 @@ def _image_display_content_converter(content):
                     "name": item_name_ch,
                     "name_en": items['itemType']['name'],
                     "download_link": asset_link,
-                    "cost": items["cost"]
+                    "cost": items["cost"],
+                    "rarity": rarity
                 })
             elif bundle['bundleType'] == "weekly":
                 process_dict["content"]["每周轮换"].append({
                     "name": item_name_ch,
                     "name_en": items['itemType']['name'],
                     "download_link": asset_link,
-                    "cost": items["cost"]
+                    "cost": items["cost"],
+                    "rarity": rarity
                 })
             elif bundle['bundleType'] == "permanent":
                 process_dict["content"]["常驻"].append({
                     "name": item_name_ch,
                     "name_en": items['itemType']['name'],
                     "download_link": asset_link,
-                    "cost": items["cost"]
+                    "cost": items["cost"],
+                    "rarity": rarity
                 })
-    process_dict["count"] = math.ceil(len(process_dict["content"]["常驻"])/2) + \
+    process_dict["count"] = math.ceil(len(process_dict["content"]["常驻"]) / 2) + \
                             math.ceil(len(process_dict["content"]["每周轮换"]) / 2) + \
                             math.ceil(len(process_dict["content"]["每日轮换"]) / 2)
     return process_dict
@@ -150,21 +161,22 @@ async def display_as_image(content):
             item_img_left = None
             item_img_right = None
             # 检查图片是否在本地存在, 如果本地存在直接使用, 不存在则下载
-            if os.path.exists(f"{file_full_path}/images/{bundle[i]['name_en']}.png"):
-                item_img_left = Image.open(f"{file_full_path}/images/{bundle[i]['name_en']}.png").resize((icon_size, icon_size))
+            if os.path.exists(f"{file_full_path}/images/{bundle[i]['name_en']}_{bundle[i]['rarity']}.png"):
+                item_img_left = Image.open(f"{file_full_path}/images/{bundle[i]['name_en']}_{bundle[i]['rarity']}.png").resize(
+                    (icon_size, icon_size))
             else:
                 item_img_left = await download_img(bundle[i]['download_link'])
                 item_img_left = circle_corner(item_img_left.resize((icon_size, icon_size)), 10)
-                item_img_left.save(f"{file_full_path}/images/{bundle[i]['name_en']}.png")
+                item_img_left.save(f"{file_full_path}/images/{bundle[i]['name_en']}_{bundle[i]['rarity']}.png")
 
             if i + 1 < len(bundle):  # 判断右边的物品, 写的挺傻的, 但就先这样了
-                if os.path.exists(f"{file_full_path}/images/{bundle[i + 1]['name_en']}.png"):
-                    item_img_right = Image.open(f"{file_full_path}/images/{bundle[i + 1]['name_en']}.png").resize(
+                if os.path.exists(f"{file_full_path}/images/{bundle[i + 1]['name_en']}_{bundle[i]['rarity']}.png"):
+                    item_img_right = Image.open(f"{file_full_path}/images/{bundle[i + 1]['name_en']}_{bundle[i]['rarity']}.png").resize(
                         (icon_size, icon_size))
                 else:
                     item_img_right = await download_img(bundle[i + 1]['download_link'])
                     item_img_right = circle_corner(item_img_right.resize((icon_size, icon_size)), 10)
-                    item_img_right.save(f"{file_full_path}/images/{bundle[i + 1]['name_en']}.png")
+                    item_img_right.save(f"{file_full_path}/images/{bundle[i + 1]['name_en']}_{bundle[i]['rarity']}.png")
 
             draw_image_at_center(image, item_img_left, vertical_counter, 0, width / 2)
             if item_img_right is not None and i + 1 < len(bundle):
