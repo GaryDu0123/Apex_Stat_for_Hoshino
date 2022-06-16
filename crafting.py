@@ -11,9 +11,9 @@ import os
 import math
 from collections import defaultdict
 from PIL import Image, ImageFont, ImageDraw
-from .tool import circle_corner, download_img
+from .tool import circle_corner, download_img, draw_text_at_center, draw_image_at_center
 from hoshino.typing import CQEvent
-from .tool import get_response
+from .tool import get_response, paste_image
 from .crafting_names import crafting_dict, rarity_dict
 from .api import API_KEY, IMAGE_MODE
 
@@ -21,24 +21,6 @@ file_full_path = os.path.dirname(os.path.abspath(__file__))
 crafting_materials_icon = Image.open(f"{file_full_path}/images/crafting_materials.png").resize((16, 18))
 icon_size = 64
 
-
-def draw_text_at_center(d, text, vertical_position, horizontal_position, bg_width, font):
-    text_width = font.getsize(text)
-    # 计算字体位置
-    d.text((horizontal_position + int((bg_width - text_width[0]) / 2), vertical_position),
-           text, (255, 255, 255, 240), font)
-
-
-def draw_image_at_center(bg, img, vertical_position, horizontal_position, bg_width):
-    # 计算字体位置
-    img = circle_corner(img, 10)
-    r, g, b, a = img.split()
-    bg.paste(img, ((horizontal_position + int((bg_width - img.size[0]) / 2)), vertical_position), mask=a)
-
-
-def draw_crafting_icon(bg, icon, vertical_position, horizontal_position):
-    r, g, b, a = icon.split()
-    bg.paste(icon, (horizontal_position, vertical_position), mask=a)
 
 
 def _image_display_content_converter(content):
@@ -188,10 +170,10 @@ async def display_as_image(content):
                                     font_small)
 
             vertical_counter += 20
-            draw_crafting_icon(image, crafting_materials_icon, vertical_counter, 36)
+            paste_image(image, crafting_materials_icon, vertical_counter, 36)
             draw.text((20 + 36, vertical_counter + 1), str(bundle[i]["cost"]), (255, 255, 255, 240), font_small)
             if i + 1 < len(bundle):
-                draw_crafting_icon(image, crafting_materials_icon, vertical_counter, int(width / 2) + 36)
+                paste_image(image, crafting_materials_icon, vertical_counter, int(width / 2) + 36)
                 draw.text((int(width / 2) + 20 + 36, vertical_counter + 1), str(bundle[i + 1]["cost"]),
                           (255, 255, 255, 240), font_small)
             vertical_counter += 24

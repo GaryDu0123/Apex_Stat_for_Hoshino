@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
 import json
+import os
+
 import aiohttp
 from datetime import datetime, timedelta
 import PIL
 from PIL import Image, ImageDraw
 from io import BytesIO
-
 
 
 async def get_response(url, force_convert=False, params=None):
@@ -53,3 +54,30 @@ def circle_corner(img, radii):
 async def download_img(url, params=None):
     async with aiohttp.request("GET", url, params=params) as rep:
         return PIL.Image.open(BytesIO(await rep.read()))
+
+
+def paste_image(bg, icon, vertical_position, horizontal_position):
+    r, g, b, a = icon.convert("RGBA").split()
+    bg.paste(icon, (horizontal_position, vertical_position), mask=a)
+
+
+def draw_text_at_center(d, text, vertical_position, horizontal_position, bg_width, font):
+    text_width = font.getsize(text)
+    # 计算字体位置
+    d.text((horizontal_position + int((bg_width - text_width[0]) / 2), vertical_position),
+           text, (255, 255, 255, 240), font)
+
+
+def draw_image_at_center(bg, img, vertical_position, horizontal_position, bg_width):
+    img = img.convert("RGBA")
+    r, g, b, a = img.split()
+    bg.paste(img, ((horizontal_position + int((bg_width - img.size[0]) / 2)), vertical_position), mask=a)
+
+
+async def open_or_download(path, link):
+    if os.path.exists(path):
+        return Image.open(path)
+    else:
+        img = await download_img(link)
+        img.save(path)
+        return img

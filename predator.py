@@ -8,7 +8,6 @@ try:
     import ujson as json
 except Exception:
     import json
-
 from hoshino.typing import CQEvent
 from .tool import get_response
 from .api import API_KEY
