@@ -2,6 +2,7 @@
 # -*-coding:utf-8 -*-
 import base64
 import os
+import re
 from io import BytesIO
 
 try:
@@ -123,20 +124,22 @@ async def display_as_image(bot, ev: CQEvent, content):
 
 
 async def get_player_stats(bot, ev: CQEvent, args):
-    if len(args) != 2:
-        await bot.send(ev, "请输入正确数量的参数 [名字 平台(PC/PS4/X1)]")
+    if len(args) != 1:
+        await bot.send(ev, "请输入正确数量的参数 [平台(PC/PS4/X1) Origin用户名]")
         return
-    if args[1].upper() not in ["PC", "PS4", "X1"]:
-        await bot.send(ev, "未知平台(PC/PS4/X1)")
-        return
+    commands = re.match("(?P<platform>(PC|PS4|X1))? *(?P<player>.+)", args[0], flags=re.I).groupdict()
+
+    # if platform.group("platform") not in ["PC", "PS4", "X1"]:
+    #     await bot.send(ev, "未知平台(PC/PS4/X1)")
+    #     return
     params = {
         "auth": API_KEY,
-        "player": args[0],
-        "platform": args[1].upper()
+        "player": commands['player'],
+        "platform": "PC" if commands['platform'] is None else commands['platform'].upper()
     }
     content = await get_response(f"https://api.mozambiquehe.re/bridge", True, params)
     if "Error" in content:
-        await bot.send(ev, "请求失败, 未找到用户~")
+        await bot.send(ev, f"请求失败, 未找到用户{commands['player']}~ 请确认平台以及用户名~")
         return
     if not IMAGE_MODE:
         global_data = content["global"]
