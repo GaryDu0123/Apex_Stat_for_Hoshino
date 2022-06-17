@@ -1,4 +1,4 @@
-# APEX Legend制造器,地图轮换查询
+# APEX Legends制造器,地图轮换查询
 
 插件还未完成所有功能, 希望有兴趣的dalao提交pr.
 
