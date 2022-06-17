@@ -27,8 +27,8 @@ rank = {
 }
 
 file_full_path = os.path.dirname(os.path.abspath(__file__))
-default_icons = Image.open(f"{file_full_path}/images/icons/bloodhound.png")
-default_bg = Image.open(f"{file_full_path}/images/banners/bloodhound.jpg")
+default_icons = Image.open(f"{file_full_path}/images/icons/bloodhound.png").convert("RGBA")
+default_bg = Image.open(f"{file_full_path}/images/banners/bloodhound.jpg").convert("RGBA")
 
 
 async def display_as_image(bot, ev: CQEvent, content):
