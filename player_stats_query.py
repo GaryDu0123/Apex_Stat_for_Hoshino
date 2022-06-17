@@ -26,21 +26,29 @@ rank = {
     "Apex Predator": "Apex 猎杀者",
 }
 
+file_full_path = os.path.dirname(os.path.abspath(__file__))
+default_icons = Image.open(f"{file_full_path}/images/icons/bloodhound.png")
+default_bg = Image.open(f"{file_full_path}/images/banners/bloodhound.jpg")
+
 
 async def display_as_image(bot, ev: CQEvent, content):
     # 图片位置
-    file_full_path = os.path.dirname(os.path.abspath(__file__))
     global_data = content["global"]
 
     # 玩家选中角色的图片
-    player_icon = (
-        await open_or_download(
-            f"{file_full_path}/images/icons/{content['legends']['selected']['LegendName'].lower()}.png",
-            content['legends']['selected']["ImgAssets"]["icon"])).convert("RGBA")
-    # player_icon = Image.open()
-    player_bg = (await open_or_download(
-        f"{file_full_path}/images/banners/{content['legends']['selected']['LegendName'].lower()}.png",
-        content['legends']['selected']["ImgAssets"]["banner"])).convert("RGBA")
+    try:
+        player_icon = (
+            await open_or_download(
+                f"{file_full_path}/images/icons/{content['legends']['selected']['LegendName'].lower()}.png",
+                content['legends']['selected']["ImgAssets"]["icon"])).convert("RGBA")
+        player_bg = (await open_or_download(
+            f"{file_full_path}/images/banners/{content['legends']['selected']['LegendName'].lower()}.png",
+            content['legends']['selected']["ImgAssets"]["banner"])).convert("RGBA")
+    except:
+        # 查询出错的时候使用默认的图标
+        player_icon = default_icons
+        player_bg = default_bg
+
     width = player_bg.size[0]  # 获取宽度
     height = player_bg.size[1]  # 获取高度
 
@@ -51,7 +59,7 @@ async def display_as_image(bot, ev: CQEvent, content):
         player_bg = player_bg.crop((0, 0, 1000, 680))
     player_bg = ImageEnhance.Brightness(player_bg).enhance(0.5)
 
-    # todo 段位图标
+    # 段位图标
     br_rank = f'{global_data["rank"]["rankName"]}{global_data["rank"]["rankDiv"]}'
     ar_rank = f'{global_data["arena"]["rankName"]}{global_data["arena"]["rankDiv"]}'
     br_rank_icon = (await open_or_download(f"{file_full_path}/images/ranks/{br_rank}.png",
