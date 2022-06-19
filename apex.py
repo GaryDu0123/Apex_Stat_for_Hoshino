@@ -47,7 +47,7 @@ async def process_command(bot, ev: CQEvent):
         await bot.send(ev, "请输入命令")
         return
     message = str(ev.message).strip()
-    command = re.findall(r"(?P<command>\w+) +(?P<args>.*)", message)[0]
+    command = re.findall(r"(?P<command>\w+) *(?P<args>.*)", message)[0]
     if command[0] in trigger_keyword:
         try:
             await trigger_keyword[command[0]](bot, ev, [command[1]])
