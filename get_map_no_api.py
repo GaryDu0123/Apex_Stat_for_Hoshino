@@ -18,11 +18,11 @@ async def get_map_unsafe(bot, ev: CQEvent, args):
         bot.send('地图获取失败')
         return
     arenas_map_en = rep_json["arenas"]["map"].lower()  # 竞技场的名字英文
-    arenas_map_zh = map_name_dict["arena"][arenas_map_en]  # 竞技场的名字中文
+    arenas_map_zh = map_name_dict["arena"].get(arenas_map_en, arenas_map_en)  # 竞技场的名字中文
     arenas_remaining = rep_json["arenas"]["times"]["remaining"]["minutes"]  # 大逃杀剩余时间
 
     br_map_en = rep_json["br"]["map"].lower()  # 大逃杀的名字英文
-    br_map_zh = map_name_dict["br"][br_map_en]  # 大逃杀的名字中文
+    br_map_zh = map_name_dict["br"].get(br_map_en, br_map_en)   # 大逃杀的名字中文
     br_remaining = rep_json["br"]["times"]["remaining"]["minutes"]  # 大逃杀剩余时间
 
     content = f"""
