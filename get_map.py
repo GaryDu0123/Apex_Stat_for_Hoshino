@@ -17,7 +17,7 @@ async def get_map(bot, ev: CQEvent, args):
     arenas_remaining = rep_json["arenas"]["current"]["remainingMins"]  # 大逃杀剩余时间
 
     br_map_en = rep_json["battle_royale"]["current"]["map"].lower()  # 大逃杀的名字英文
-    br_map_zh = map_name_dict["br"].get(br_map_en, arenas_map_en)  # 大逃杀的名字中文
+    br_map_zh = map_name_dict["br"].get(br_map_en, br_map_en)  # 大逃杀的名字中文
     br_remaining = rep_json["battle_royale"]["current"]["remainingMins"]  # 大逃杀剩余时间
 
     content = f"""
@@ -37,7 +37,7 @@ async def get_future_map(bot, ev: CQEvent, args):
     arenas_start_time = recalculate_timezone(rep_json["arenas"]["next"]["readableDate_start"])
 
     br_map_en = rep_json["battle_royale"]["next"]["map"].lower()  # 大逃杀的名字英文
-    br_map_zh = map_name_dict["br"].get(br_map_en, arenas_map_en)  # 大逃杀的名字中文
+    br_map_zh = map_name_dict["br"].get(br_map_en, br_map_en)  # 大逃杀的名字中文
     br_start_time = recalculate_timezone(rep_json["battle_royale"]["next"]["readableDate_start"])
 
     content = f"""
