@@ -12,7 +12,8 @@ map_name_dict_config = {
         "Encore": "再来一次",
         "Habitat 4": "栖息地4",
         "Habitat": "栖息地4",
-        "Drop-Off": "原料厂"
+        "Drop-Off": "原料厂",
+        "Drop Off": "原料厂"
     }
 }
 

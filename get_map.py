@@ -13,11 +13,11 @@ from .map_names import map_name_dict
 async def get_map(bot, ev: CQEvent, args):
     rep_json = await get_response(f"https://api.mozambiquehe.re/maprotation?auth={API_KEY}&version=2", True)
     arenas_map_en = rep_json["arenas"]["current"]["map"].lower()  # 竞技场的名字英文
-    arenas_map_zh = map_name_dict["arena"][arenas_map_en]  # 竞技场的名字中文
+    arenas_map_zh = map_name_dict["arena"].get(arenas_map_en, arenas_map_en)  # 竞技场的名字中文
     arenas_remaining = rep_json["arenas"]["current"]["remainingMins"]  # 大逃杀剩余时间
 
     br_map_en = rep_json["battle_royale"]["current"]["map"].lower()  # 大逃杀的名字英文
-    br_map_zh = map_name_dict["br"][br_map_en]  # 大逃杀的名字中文
+    br_map_zh = map_name_dict["br"].get(br_map_en, arenas_map_en)  # 大逃杀的名字中文
     br_remaining = rep_json["battle_royale"]["current"]["remainingMins"]  # 大逃杀剩余时间
 
     content = f"""
@@ -33,11 +33,11 @@ async def get_map(bot, ev: CQEvent, args):
 async def get_future_map(bot, ev: CQEvent, args):
     rep_json = await get_response(f"https://api.mozambiquehe.re/maprotation?auth={API_KEY}&version=2", True)
     arenas_map_en = rep_json["arenas"]["next"]["map"].lower()  # 竞技场的名字英文
-    arenas_map_zh = map_name_dict["arena"][arenas_map_en]  # 竞技场的名字中文
+    arenas_map_zh = map_name_dict["arena"].get(arenas_map_en, arenas_map_en)  # 竞技场的名字中文
     arenas_start_time = recalculate_timezone(rep_json["arenas"]["next"]["readableDate_start"])
 
     br_map_en = rep_json["battle_royale"]["next"]["map"].lower()  # 大逃杀的名字英文
-    br_map_zh = map_name_dict["br"][br_map_en]  # 大逃杀的名字中文
+    br_map_zh = map_name_dict["br"].get(br_map_en, arenas_map_en)  # 大逃杀的名字中文
     br_start_time = recalculate_timezone(rep_json["battle_royale"]["next"]["readableDate_start"])
 
     content = f"""
