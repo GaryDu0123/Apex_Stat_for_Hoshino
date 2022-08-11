@@ -6,7 +6,7 @@ crafting_config_dict = {
     # 武器
     "辅助手枪": ['wingman'],
     "P2020": [],
-    "RE-45": [],
+    "RE-45": ["re-45"],
     "VK-47平行步枪": [],
     "赫姆洛克步枪": [],
     "R-301卡宾枪": ["r301"],
@@ -16,7 +16,7 @@ crafting_config_dict = {
     "R-99冲锋枪": [],
     "电能冲锋枪": [],
     "C.A.R冲锋枪": ['car'],
-    "专注轻机枪": [],
+    "专注轻机枪": ['devotion'],
     "喷火轻机枪": [],
     "L-star轻机枪": [],
     "暴走轻机枪": ["rampage"],
@@ -58,6 +58,7 @@ crafting_config_dict = {
     "4倍至8倍可调节式光学瞄准镜": ['optic_variable_sniper'],
     "单倍数字化威胁": ['optic_digital_threat'],
     "4倍至10倍数字化狙击威胁": [],
+    "激光瞄具": ['laser_sight'],
 
     # 消耗品
     "小型护盾电池": [],
